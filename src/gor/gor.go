@@ -2,26 +2,43 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"bufio"
 	"net/http"
 	"io/ioutil"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/engine/standard"
 )
-
+var inputReader * bufio.Reader
+var input string
+var err error
+func formatinput(str string) string {
+	slen := len(str)
+	if slen < 2 {
+		return ""
+	}
+	if str[slen-2:] == "\r\n" {
+		return str[:slen-2]
+	}
+	if str[slen-1:] == "\n" {
+		return str[:slen-1]
+	}
+	return str
+}
 func main() {
-	app := echo.New()
-	app.GET("/user/:id", func(c echo.Context) error {
-		id := c.Param("id")
-		fmt.Println("params : ",id)
-		response,_ := http.Get("http://children-account.putao.com/u?keyword=" + id)
+	fmt.Println("Please input uid or phone or email to find user info:")
+	inputReader = bufio.NewReader(os.Stdin)
+	for {
+		input, err = inputReader.ReadString('\n')
+		input = formatinput(input)
+		fmt.Println(input)
+		if len(input) < 1 {
+			fmt.Println("input not null")
+			continue
+		}
+		url := "https://children-account.putao.com/u?keyword=" + input
+		fmt.Println(url)
+		response,_ := http.Get(url)
 		defer response.Body.Close()
 		body,_ := ioutil.ReadAll(response.Body)
 		fmt.Println("result : ",string(body))
-		return c.String(http.StatusOK, string(body))
-	})
-	fmt.Println("open http://127.0.0.1:11427/user/keyword in your browser")
-	fmt.Println("eg: http://127.0.0.1:11427/user/60060427")
-	fmt.Println("eg: http://127.0.0.1:11427/user/18516560427")
-	fmt.Println("eg: http://127.0.0.1:11427/user/mmaabbcc0427@qq.com")
-	app.Run(standard.New("0.0.0.0:11427"))
+	}
 }
