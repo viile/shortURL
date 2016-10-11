@@ -1,44 +1,23 @@
 package main
 
 import (
-	"fmt"
-	"os"
-	"bufio"
 	"net/http"
-	"io/ioutil"
+	"github.com/gin-gonic/gin"
+	//"github.com/labstack/echo"
+	//"github.com/labstack/echo/engine/standard"
 )
-var inputReader * bufio.Reader
-var input string
+var apiURL string
 var err error
-func formatinput(str string) string {
-	slen := len(str)
-	if slen < 2 {
-		return ""
-	}
-	if str[slen-2:] == "\r\n" {
-		return str[:slen-2]
-	}
-	if str[slen-1:] == "\n" {
-		return str[:slen-1]
-	}
-	return str
-}
+
 func main() {
-	fmt.Println("Please input uid or phone or email to find user info:")
-	inputReader = bufio.NewReader(os.Stdin)
-	for {
-		input, err = inputReader.ReadString('\n')
-		input = formatinput(input)
-		fmt.Println(input)
-		if len(input) < 1 {
-			fmt.Println("input not null")
-			continue
-		}
-		url := "https://children-account.putao.com/u?keyword=" + input
-		fmt.Println(url)
-		response,_ := http.Get(url)
-		defer response.Body.Close()
-		body,_ := ioutil.ReadAll(response.Body)
-		fmt.Println("result : ",string(body))
-	}
+	app := gin.Default()
+	app.LoadHTMLGlob("public/views/*")
+	app.StaticFS("/public",http.Dir("./public/"))
+	app.StaticFile("/favicon.ico", "public/favicon.ico")
+	app.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.tmpl", gin.H{
+			"title": "Main website",
+		})
+	})
+	app.Run("0.0.0.0:10427")
 }
