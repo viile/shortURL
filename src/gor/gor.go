@@ -17,7 +17,8 @@ func main() {
 	app.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
 			"title": "Main website",
+			"static_url" : "http://admin-shorturl.putao.com/",
 		})
 	})
-	app.Run("0.0.0.0:10427")
+	app.Run("0.0.0.0:11427")
 }

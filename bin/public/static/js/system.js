@@ -17,6 +17,7 @@ var sys = {
 			if (result.error_code == 0) {
 				//console.log(result);
 				$('#gtext').html("http://pturl.cn/" + result.short_url);
+				$("#qrcode").attr('src',"http://qrcode.putao.com/qrcode?&type=png&content="+encodeURIComponent("http://pturl.cn/"+result.short_url)); 
 			} else {
 				swal("wrong!", "network error", "error");
 			}

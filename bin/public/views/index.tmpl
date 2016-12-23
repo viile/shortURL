@@ -1,9 +1,9 @@
 <html>
 <head>
 <title>{{ .title }}</title>
-<link rel="stylesheet" href="http://192.168.231.130:10427/public/static/css/bootstrap.min.css">
-<link rel="stylesheet" href="http://192.168.231.130:10427/public/static/css/sweetalert.css">
-<link rel="stylesheet" href="http://192.168.231.130:10427/public/static/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="{{.static_url}}public/static/css/bootstrap.min.css">
+<link rel="stylesheet" href="{{.static_url}}public/static/css/sweetalert.css">
+<link rel="stylesheet" href="{{.static_url}}public/static/css/bootstrap-theme.min.css">
 </head>
 <body>
 <div class="container">
@@ -24,6 +24,7 @@
 					</div>
 					<button type="button" onclick="sys.generate()" class="btn btn-primary block full-width m-b">Generate</button>
 					<p class="text-muted text-center"><h2 id="gtext"></h2></p>
+					<div ><img id="qrcode" src=""></div>
 				</form>
 			</div>
 			<div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
@@ -40,10 +41,10 @@
 	</div>
 	</div>
 </div>
-<script src="http://192.168.231.130:10427/public/static/js/jquery.min.js"></script>
-<script src="http://192.168.231.130:10427/public/static/js/bootstrap.min.js"></script>
-<script src="http://192.168.231.130:10427/public/static/js/bootstrap.min.js"></script>
-<script src="http://192.168.231.130:10427/public/static/js/sweetalert.min.js"></script>
-<script src="http://192.168.231.130:10427/public/static/js/system.js"></script>
+<script src="{{.static_url}}public/static/js/jquery.min.js"></script>
+<script src="{{.static_url}}public/static/js/bootstrap.min.js"></script>
+<script src="{{.static_url}}public/static/js/bootstrap.min.js"></script>
+<script src="{{.static_url}}public/static/js/sweetalert.min.js"></script>
+<script src="{{.static_url}}public/static/js/system.js"></script>
 </body>
 </html>
